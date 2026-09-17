@@ -1,311 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Synapse Database Test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Synapse IITM BS internal operations ledger">
+  <title>Synapse — Operations Ledger</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-
-<h2>Synapse Ledger — Database Test</h2>
-
-<div id="login-area">
-
-  <input
-    type="email"
-    id="email"
-    placeholder="Email"
-  >
-
-  <br><br>
-
-  <input
-    type="password"
-    id="password"
-    placeholder="Password"
-  >
-
-  <br><br>
-
-  <button id="login">Login</button>
-
-</div>
-
-
-<div id="app" style="display:none;">
-
-  <hr>
-
-  <h3 id="welcome"></h3>
-
-  <button id="create-test">
-    Create Test Event
-  </button>
-
-  <button id="load-logs">
-    Load My Visible Logs
-  </button>
-
-  <button id="logout">
-    Logout
-  </button>
-
-</div>
-
-
-<pre id="result">Waiting...</pre>
-
-
-<script type="module">
-
-import { createClient }
-from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-
-const SUPABASE_URL =
-  "https://kxygjwhppuxysvjwnwoc.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_6RvwuZZfDgvyus4BXcrMdw_hHyV_gyD";
-
-
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-let currentProfile = null;
-
-const result =
-  document.getElementById("result");
-
-document
-  .getElementById("login")
-  .addEventListener("click", async () => {
-
-    result.textContent = "Logging in...";
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-
-    const {
-      data: authData,
-      error: authError
-    } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-
-
-    if (authError) {
-
-      result.textContent =
-        "LOGIN FAILED:\n\n" +
-        authError.message;
-
-      return;
-    }
-
-
-    const {
-      data: profile,
-      error: profileError
-    } = await supabase
-      .from("profiles")
-      .select(`
-        name,
-        email,
-        role,
-        position,
-        tag,
-        department_id,
-        departments (
-          name
-        )
-      `)
-      .eq("id", authData.user.id)
-      .single();
-
-
-    if (profileError) {
-
-      result.textContent =
-        "PROFILE ERROR:\n\n" +
-        profileError.message;
-
-      return;
-    }
-
-
-    currentProfile = profile;
-
-
-    document.getElementById("login-area")
-      .style.display = "none";
-
-    document.getElementById("app")
-      .style.display = "block";
-
-
-    document.getElementById("welcome")
-      .textContent =
-        `${profile.name} — ${profile.tag}`;
-
-
-    result.textContent =
-      "LOGIN SUCCESSFUL\n\n" +
-      JSON.stringify(profile, null, 2);
-
-});
-
-
-document
-  .getElementById("create-test")
-  .addEventListener("click", async () => {
-
-    result.textContent =
-      "Creating test event...";
-
-
-    const {
-      data: userData
-    } = await supabase.auth.getUser();
-
-
-    const user =
-      userData.user;
-
-
-    if (!user) {
-
-      result.textContent =
-        "No authenticated user.";
-
-      return;
-    }
-
-    const testEvent = {
-
-      created_by: user.id,
-
-      day_of_week: "Monday",
-
-      event_date: "2026-09-14",
-
-      title: "TEST — Synapse Ledger Security Check",
-
-      event_type: "Internal Test",
-
-      description:
-        "Temporary database test entry. This can be removed later.",
-
-      registrations: 10,
-
-      participants: 8,
-
-      youtube_link: null,
-
-      drive_link:
-        "https://drive.google.com/"
-
-    };
-
-
-    const {
-      data,
-      error
-    } = await supabase
-      .from("event_logs")
-      .insert(testEvent)
-      .select(`
-        *,
-        departments (
-          name
-        )
-      `);
-
-
-    if (error) {
-
-      result.textContent =
-        "INSERT FAILED:\n\n" +
-        error.message;
-
-      return;
-    }
-
-
-    result.textContent =
-      "TEST EVENT CREATED\n\n" +
-      JSON.stringify(data, null, 2);
-
-});
-
-
-
-document
-  .getElementById("load-logs")
-  .addEventListener("click", async () => {
-
-    result.textContent =
-      "Loading permitted logs...";
-
-
-    const {
-      data,
-      error
-    } = await supabase
-      .from("event_logs")
-      .select(`
-        id,
-        title,
-        event_date,
-        entry_tag,
-        created_by,
-        departments (
-          name
-        )
-      `)
-      .order(
-        "created_at",
-        { ascending: false }
-      );
-
-
-    if (error) {
-
-      result.textContent =
-        "READ FAILED:\n\n" +
-        error.message;
-
-      return;
-    }
-
-
-    result.textContent =
-      `VISIBLE LOGS: ${data.length}\n\n` +
-      JSON.stringify(data, null, 2);
-
-});
-
-document
-  .getElementById("logout")
-  .addEventListener("click", async () => {
-
-    await supabase.auth.signOut();
-
-    currentProfile = null;
-
-    location.reload();
-
-});
-
-</script>
-
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <main class="shell">
+    <section id="authView" class="auth-wrap">
+      <div class="brand-panel">
+        <div class="eyebrow">IIT Madras · Internal</div>
+        <h1>Synapse<br><span>Operations Ledger</span></h1>
+        <p>A private record of events, departmental work and executive activity across the society.</p>
+        <div class="brand-rule"></div>
+        <p class="micro">Authenticated access only · Records stored in the central cloud database</p>
+      </div>
+      <form id="loginForm" class="panel auth-card">
+        <div><div class="kicker">Welcome back</div><h2>Sign in</h2><p class="muted">Use your authorized IITM account credentials.</p></div>
+        <label>Email<input id="loginEmail" type="email" autocomplete="username" required placeholder="name@study.iitm.ac.in"></label>
+        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
+        <button id="loginButton" class="btn primary" type="submit">Access ledger</button>
+        <p id="authMessage" class="message hidden"></p>
+      </form>
+    </section>
+
+    <section id="appView" class="hidden">
+      <header class="topbar">
+        <div class="brand-mini"><div class="mark">S</div><div><strong>Synapse</strong><span>Operations Ledger</span></div></div>
+        <div class="top-actions"><span id="termPill" class="pill subtle">Term —</span><button id="logoutButton" class="btn ghost small">Log out</button></div>
+      </header>
+
+      <section class="hero panel">
+        <div><div id="accessLabel" class="eyebrow">Access</div><h1 id="welcomeName">Welcome</h1><p id="welcomeMeta" class="muted"></p></div>
+        <div class="hero-badges"><span id="tagBadge" class="pill gold"></span><span id="roleBadge" class="pill"></span></div>
+      </section>
+
+      <section id="statsGrid" class="stats-grid">
+        <article class="stat panel"><span>Visible records</span><strong id="statRecords">—</strong><small>current ledger view</small></article>
+        <article class="stat panel"><span>Participants</span><strong id="statParticipants">—</strong><small>across visible records</small></article>
+        <article class="stat panel"><span>Departments</span><strong id="statDepartments">—</strong><small>represented in view</small></article>
+      </section>
+
+      <nav class="tabs" aria-label="Ledger sections">
+        <button class="tab active" data-pane="new">New entry</button>
+        <button class="tab" data-pane="ledger">Ledger</button>
+      </nav>
+
+      <section id="newPane" class="pane">
+        <form id="eventForm" class="panel form-card">
+          <div class="section-head"><div><div class="kicker">Append record</div><h2>New ledger entry</h2></div><span id="entryTagPreview" class="pill"></span></div>
+          <div class="grid two">
+            <label>Date of event<input id="eventDate" type="date" required></label>
+            <label>Event / deliverable type<input id="eventType" type="text" maxlength="120" required placeholder="e.g. Reading Circle, Debate, Newsletter"></label>
+          </div>
+          <label>Title<input id="eventTitle" maxlength="180" required placeholder="Clear title for the event or deliverable"></label>
+          <label>Summary<textarea id="eventDescription" rows="5" maxlength="4000" required placeholder="What happened, key outcomes, relevant context and follow-up..."></textarea></label>
+          <div class="grid two">
+            <label>Registrations <span class="optional">optional</span><input id="eventRegistrations" type="number" min="0" placeholder="e.g. 140"></label>
+            <label>Participants<input id="eventParticipants" type="number" min="0" required placeholder="e.g. 95"></label>
+          </div>
+          <div class="grid two">
+            <label>Recording link <span class="optional">optional</span><input id="eventYoutube" type="url" placeholder="https://..."></label>
+            <label>Asset / Drive link<input id="eventDrive" type="url" required placeholder="https://drive.google.com/..."></label>
+          </div>
+          <div class="form-footer"><p class="muted micro">Identity, department, tag and active term are assigned by the database.</p><button id="submitEvent" class="btn primary" type="submit">Append to ledger</button></div>
+          <p id="formMessage" class="message hidden"></p>
+        </form>
+      </section>
+
+      <section id="ledgerPane" class="pane hidden">
+        <div class="panel ledger-tools">
+          <div class="section-head"><div><div class="kicker">Central record</div><h2 id="ledgerHeading">Ledger</h2></div><div class="ledger-actions"><div id="exportControls" class="export-controls hidden"><select id="exportScope" aria-label="Export scope"><option value="FILTERED">Filtered view</option><option value="ALL">Complete term</option></select><button id="exportTxt" class="btn ghost small" type="button">TXT</button><button id="exportCsv" class="btn ghost small" type="button">CSV</button><button id="exportJson" class="btn ghost small" type="button">JSON</button></div><button id="refreshButton" class="btn ghost small" type="button">Refresh</button></div></div>
+          <div id="executiveFilters" class="filters hidden">
+            <label>Search<input id="searchFilter" type="search" placeholder="Title, summary, submitter..."></label>
+            <label>Department<select id="departmentFilter"><option value="ALL">All departments</option><option value="EXECUTIVE">Executive entries</option></select></label>
+            <label>Type<select id="typeFilter"><option value="ALL">All types</option></select></label>
+          </div>
+        </div>
+        <div id="ledgerStatus" class="empty panel">Loading records…</div>
+        <div id="logList" class="log-list"></div>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
