@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Synapse Database Test</title>
+</head>
+
+<body>
+
+<h2>Synapse Ledger — Database Test</h2>
+
+<div id="login-area">
+
+  <input
+    type="email"
+    id="email"
+    placeholder="Email"
+  >
+
+  <br><br>
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Password"
+  >
+
+  <br><br>
+
+  <button id="login">Login</button>
+
+</div>
+
+
+<div id="app" style="display:none;">
+
+  <hr>
+
+  <h3 id="welcome"></h3>
+
+  <button id="create-test">
+    Create Test Event
+  </button>
+
+  <button id="load-logs">
+    Load My Visible Logs
+  </button>
+
+  <button id="logout">
+    Logout
+  </button>
+
+</div>
+
+
+<pre id="result">Waiting...</pre>
+
+
+<script type="module">
+
+import { createClient }
+from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+const SUPABASE_URL =
+  "https://kxygjwhppuxysvjwnwoc.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_6RvwuZZfDgvyus4BXcrMdw_hHyV_gyD";
+
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+let currentProfile = null;
+
+const result =
+  document.getElementById("result");
+
+document
+  .getElementById("login")
+  .addEventListener("click", async () => {
+
+    result.textContent = "Logging in...";
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+
+    const {
+      data: authData,
+      error: authError
+    } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+
+    if (authError) {
+
+      result.textContent =
+        "LOGIN FAILED:\n\n" +
+        authError.message;
+
+      return;
+    }
+
+
+    const {
+      data: profile,
+      error: profileError
+    } = await supabase
+      .from("profiles")
+      .select(`
+        name,
+        email,
+        role,
+        position,
+        tag,
+        department_id,
+        departments (
+          name
+        )
+      `)
+      .eq("id", authData.user.id)
+      .single();
+
+
+    if (profileError) {
+
+      result.textContent =
+        "PROFILE ERROR:\n\n" +
+        profileError.message;
+
+      return;
+    }
+
+
+    currentProfile = profile;
+
+
+    document.getElementById("login-area")
+      .style.display = "none";
+
+    document.getElementById("app")
+      .style.display = "block";
+
+
+    document.getElementById("welcome")
+      .textContent =
+        `${profile.name} — ${profile.tag}`;
+
+
+    result.textContent =
+      "LOGIN SUCCESSFUL\n\n" +
+      JSON.stringify(profile, null, 2);
+
+});
+
+
+document
+  .getElementById("create-test")
+  .addEventListener("click", async () => {
+
+    result.textContent =
+      "Creating test event...";
+
+
+    const {
+      data: userData
+    } = await supabase.auth.getUser();
+
+
+    const user =
+      userData.user;
+
+
+    if (!user) {
+
+      result.textContent =
+        "No authenticated user.";
+
+      return;
+    }
+
+    const testEvent = {
+
+      created_by: user.id,
+
+      day_of_week: "Monday",
+
+      event_date: "2026-09-14",
+
+      title: "TEST — Synapse Ledger Security Check",
+
+      event_type: "Internal Test",
+
+      description:
+        "Temporary database test entry. This can be removed later.",
+
+      registrations: 10,
+
+      participants: 8,
+
+      youtube_link: null,
+
+      drive_link:
+        "https://drive.google.com/"
+
+    };
+
+
+    const {
+      data,
+      error
+    } = await supabase
+      .from("event_logs")
+      .insert(testEvent)
+      .select(`
+        *,
+        departments (
+          name
+        )
+      `);
+
+
+    if (error) {
+
+      result.textContent =
+        "INSERT FAILED:\n\n" +
+        error.message;
+
+      return;
+    }
+
+
+    result.textContent =
+      "TEST EVENT CREATED\n\n" +
+      JSON.stringify(data, null, 2);
+
+});
+
+
+
+document
+  .getElementById("load-logs")
+  .addEventListener("click", async () => {
+
+    result.textContent =
+      "Loading permitted logs...";
+
+
+    const {
+      data,
+      error
+    } = await supabase
+      .from("event_logs")
+      .select(`
+        id,
+        title,
+        event_date,
+        entry_tag,
+        created_by,
+        departments (
+          name
+        )
+      `)
+      .order(
+        "created_at",
+        { ascending: false }
+      );
+
+
+    if (error) {
+
+      result.textContent =
+        "READ FAILED:\n\n" +
+        error.message;
+
+      return;
+    }
+
+
+    result.textContent =
+      `VISIBLE LOGS: ${data.length}\n\n` +
+      JSON.stringify(data, null, 2);
+
+});
+
+document
+  .getElementById("logout")
+  .addEventListener("click", async () => {
+
+    await supabase.auth.signOut();
+
+    currentProfile = null;
+
+    location.reload();
+
+});
+
+</script>
+
+</body>
+</html>
