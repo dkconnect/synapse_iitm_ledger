@@ -2,89 +2,637 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Synapse IITM BS internal operations ledger">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta
+    name="description"
+    content="Synapse IITM BS internal operations ledger"
+  >
   <title>Synapse — Operations Ledger</title>
-  <link rel="stylesheet" href="styles.css">
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
 </head>
 <body>
-  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
   <main class="shell">
-    <section id="authView" class="auth-wrap">
+
+    <section
+      id="authView"
+      class="auth-wrap"
+    >
       <div class="brand-panel">
-        <div class="eyebrow">IIT Madras · Internal</div>
-        <h1>Synapse<br><span>Operations Ledger</span></h1>
-        <p>A private record of events, departmental work and executive activity across the society.</p>
+        <div class="eyebrow">
+          IIT Madras · Internal
+        </div>
+
+        <h1>
+          Synapse
+          <br>
+          <span>Operations Ledger</span>
+        </h1>
+
+        <p>
+          A private record of events, departmental work and
+          executive activity across the society.
+        </p>
+
         <div class="brand-rule"></div>
-        <p class="micro">Authenticated access only · Records stored in the central cloud database</p>
+        <p class="micro">
+          Authenticated access only · Records stored in the
+          central cloud database
+        </p>
       </div>
-      <form id="loginForm" class="panel auth-card">
-        <div><div class="kicker">Welcome back</div><h2>Sign in</h2><p class="muted">Use your authorized IITM account credentials.</p></div>
-        <label>Email<input id="loginEmail" type="email" autocomplete="username" required placeholder="name@study.iitm.ac.in"></label>
-        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
-        <button id="loginButton" class="btn primary" type="submit">Access ledger</button>
-        <p id="authMessage" class="message hidden"></p>
+
+      <form
+        id="loginForm"
+        class="panel auth-card"
+      >
+        <div>
+          <div class="kicker">
+            Welcome back
+          </div>
+
+          <h2>Sign in</h2>
+          <p class="muted">
+            Use your authorized IITM account credentials.
+          </p>
+        </div>
+
+        <label>
+          Email
+          <input
+            id="loginEmail"
+            type="email"
+            autocomplete="username"
+            required
+            placeholder="name@study.iitm.ac.in"
+          >
+        </label>
+
+        <label>
+          Password
+          <input
+            id="loginPassword"
+            type="password"
+            autocomplete="current-password"
+            required
+            placeholder="••••••••"
+          >
+        </label>
+
+        <button
+          id="loginButton"
+          class="btn primary"
+          type="submit"
+        >
+          Access ledger
+        </button>
+
+        <p
+          id="authMessage"
+          class="message hidden"
+        ></p>
       </form>
     </section>
 
-    <section id="appView" class="hidden">
+    <section
+      id="appView"
+      class="hidden"
+    >
       <header class="topbar">
-        <div class="brand-mini"><div class="mark">S</div><div><strong>Synapse</strong><span>Operations Ledger</span></div></div>
-        <div class="top-actions"><span id="termPill" class="pill subtle">Term —</span><button id="logoutButton" class="btn ghost small">Log out</button></div>
+        <div class="brand-mini">
+          <div class="mark">
+            S
+          </div>
+
+          <div>
+            <strong>Synapse</strong>
+            <span>Operations Ledger</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <span
+            id="termPill"
+            class="pill subtle"
+          >
+            Term —
+          </span>
+
+          <button
+            id="logoutButton"
+            class="btn ghost small"
+            type="button"
+          >
+            Log out
+          </button>
+
+        </div>
       </header>
 
       <section class="hero panel">
-        <div><div id="accessLabel" class="eyebrow">Access</div><h1 id="welcomeName">Welcome</h1><p id="welcomeMeta" class="muted"></p></div>
-        <div class="hero-badges"><span id="tagBadge" class="pill gold"></span><span id="roleBadge" class="pill"></span></div>
+        <div>
+          <div
+            id="accessLabel"
+            class="eyebrow"
+          >
+            Access
+          </div>
+
+          <h1 id="welcomeName">
+            Welcome
+          </h1>
+
+          <p
+            id="welcomeMeta"
+            class="muted"
+          ></p>
+        </div>
+
+        <div class="hero-badges">
+          <span
+            id="tagBadge"
+            class="pill gold"
+          ></span>
+          <span
+            id="roleBadge"
+            class="pill"
+          ></span>
+        </div>
       </section>
 
-      <section id="statsGrid" class="stats-grid">
-        <article class="stat panel"><span>Visible records</span><strong id="statRecords">—</strong><small>current ledger view</small></article>
-        <article class="stat panel"><span>Participants</span><strong id="statParticipants">—</strong><small>across visible records</small></article>
-        <article class="stat panel"><span>Departments</span><strong id="statDepartments">—</strong><small>represented in view</small></article>
+      <section
+        id="statsGrid"
+        class="stats-grid"
+      >
+        <article class="stat panel">
+          <span>Visible records</span>
+          <strong id="statRecords">
+            —
+          </strong>
+          <small>
+            current ledger view
+          </small>
+        </article>
+
+        <article class="stat panel">
+          <span>Participants</span>
+          <strong id="statParticipants">
+            —
+          </strong>
+          <small>
+            across visible records
+          </small>
+        </article>
+
+        <article class="stat panel">
+          <span>Departments</span>
+          <strong id="statDepartments">
+            —
+          </strong>
+          <small>
+            represented in view
+          </small>
+        </article>
       </section>
 
-      <nav class="tabs" aria-label="Ledger sections">
-        <button class="tab active" data-pane="new">New entry</button>
-        <button class="tab" data-pane="ledger">Ledger</button>
+      <section
+        id="term-admin-section"
+        class="panel term-admin hidden"
+      >
+        <div class="section-head">
+          <div>
+            <div class="kicker">
+              Secretariat control
+            </div>
+            <h2>
+              Term Administration
+            </h2>
+            <p class="muted section-copy">
+              Close the current operational term and begin a
+              new ledger after Deputy Secretary approval.
+            </p>
+          </div>
+        </div>
+
+        <div class="term-status-box">
+          <div>
+            <span class="muted">
+              Current Active Term
+            </span>
+
+            <h3 id="admin-current-term">
+              Loading...
+            </h3>
+          </div>
+
+          <span class="status-pill status-active">
+            ACTIVE
+          </span>
+        </div>
+
+        <div
+          id="secretary-transition-panel"
+          class="hidden"
+        >
+          <hr class="section-divider">
+          <h3>
+            Start New Term
+          </h3>
+          <p class="muted">
+            Creates a transition request that must be approved
+            by the Deputy Secretary.
+          </p>
+
+          <label for="new-term-name">
+            New Term Name
+            <input
+              type="text"
+              id="new-term-name"
+              maxlength="40"
+              placeholder="e.g. 2027-28"
+              autocomplete="off"
+            >
+          </label>
+          <button
+            id="btn-request-transition"
+            class="btn primary term-action"
+            type="button"
+          >
+            Request Term Transition
+          </button>
+        </div>
+
+        <div
+          id="pending-transition-panel"
+          class="hidden"
+        >
+          <hr class="section-divider">
+          <div class="kicker">
+            Pending transition
+          </div>
+          <h3 id="transition-title">
+            —
+          </h3>
+
+          <div class="transition-info">
+            <div>
+              <span class="muted">
+                Requested by
+              </span>
+              <strong id="transition-requester">
+                —
+              </strong>
+            </div>
+
+            <div>
+              <span class="muted">
+                Status
+              </span>
+              <strong id="transition-status">
+                —
+              </strong>
+            </div>
+          </div>
+
+          <div
+            id="deputy-approval-area"
+            class="hidden"
+          >
+            <p class="warning-text">
+              Check the requested new term before approving it.
+              The Secretary must still perform final confirmation.
+            </p>
+            <button
+              id="btn-approve-transition"
+              class="btn primary"
+              type="button"
+            >
+              Approve as Deputy Secretary
+            </button>
+          </div>
+
+          <div
+            id="secretary-finalize-area"
+            class="hidden"
+          >
+            <p class="warning-text">
+              Deputy Secretary approval has been received.
+              Finalizing will close the current term and make
+              the new term active.
+            </p>
+
+            <label for="final-confirmation">
+              Type
+              <strong>START NEW TERM</strong>
+              to confirm
+              <input
+                type="text"
+                id="final-confirmation"
+                placeholder="START NEW TERM"
+                autocomplete="off"
+              >
+            </label>
+
+            <button
+              id="btn-finalize-transition"
+              class="btn danger term-action"
+              type="button"
+            >
+              Close Current Term & Start New Term
+            </button>
+          </div>
+        </div>
+
+        <p
+          id="term-admin-message"
+          class="message hidden term-message"
+        ></p>
+      </section>
+      <nav
+        class="tabs"
+        aria-label="Ledger sections"
+      >
+        <button
+          class="tab active"
+          data-pane="new"
+          type="button"
+        >
+          New entry
+        </button>
+        <button
+          class="tab"
+          data-pane="ledger"
+          type="button"
+        >
+          Ledger
+        </button>
       </nav>
 
-      <section id="newPane" class="pane">
-        <form id="eventForm" class="panel form-card">
-          <div class="section-head"><div><div class="kicker">Append record</div><h2>New ledger entry</h2></div><span id="entryTagPreview" class="pill"></span></div>
-          <div class="grid two">
-            <label>Date of event<input id="eventDate" type="date" required></label>
-            <label>Event / deliverable type<input id="eventType" type="text" maxlength="120" required placeholder="e.g. Reading Circle, Debate, Newsletter"></label>
+      <section
+        id="newPane"
+        class="pane"
+      >
+        <form
+          id="eventForm"
+          class="panel form-card"
+        >
+          <div class="section-head">
+            <div>
+              <div class="kicker">
+                Append record
+              </div>
+              <h2>
+                New ledger entry
+              </h2>
+            </div>
+
+            <span
+              id="entryTagPreview"
+              class="pill"
+            ></span>
           </div>
-          <label>Title<input id="eventTitle" maxlength="180" required placeholder="Clear title for the event or deliverable"></label>
-          <label>Summary<textarea id="eventDescription" rows="5" maxlength="4000" required placeholder="What happened, key outcomes, relevant context and follow-up..."></textarea></label>
+
           <div class="grid two">
-            <label>Registrations <span class="optional">optional</span><input id="eventRegistrations" type="number" min="0" placeholder="e.g. 140"></label>
-            <label>Participants<input id="eventParticipants" type="number" min="0" required placeholder="e.g. 95"></label>
+            <label>
+              Date of event
+              <input
+                id="eventDate"
+                type="date"
+                required
+              >
+            </label>
+
+            <label>
+              Event / Deliverable Type
+              <input
+                id="eventType"
+                type="text"
+                maxlength="120"
+                required
+                placeholder="e.g. Reading Circle, Debate, Newsletter"
+              >
+            </label>
           </div>
+
+          <label>
+            Title
+            <input
+              id="eventTitle"
+              type="text"
+              maxlength="180"
+              required
+              placeholder="Clear title for the event or deliverable"
+            >
+          </label>
+
+          <label>
+            Summary
+            <textarea
+              id="eventDescription"
+              rows="5"
+              maxlength="4000"
+              required
+              placeholder="What happened, key outcomes, relevant context and follow-up..."
+            ></textarea>
+          </label>
+
           <div class="grid two">
-            <label>Recording link <span class="optional">optional</span><input id="eventYoutube" type="url" placeholder="https://..."></label>
-            <label>Asset / Drive link<input id="eventDrive" type="url" required placeholder="https://drive.google.com/..."></label>
+            <label>
+              Registrations
+              <span class="optional">
+                optional
+              </span>
+              <input
+                id="eventRegistrations"
+                type="number"
+                min="0"
+                step="1"
+                placeholder="e.g. 140"
+              >
+            </label>
+
+            <label>
+              Participants
+              <input
+                id="eventParticipants"
+                type="number"
+                min="0"
+                step="1"
+                required
+                placeholder="e.g. 95"
+              >
+            </label>
           </div>
-          <div class="form-footer"><p class="muted micro">Identity, department, tag and active term are assigned by the database.</p><button id="submitEvent" class="btn primary" type="submit">Append to ledger</button></div>
-          <p id="formMessage" class="message hidden"></p>
+
+          <div class="grid two">
+            <label>
+              Recording link
+              <span class="optional">
+                optional
+              </span>
+              <input
+                id="eventYoutube"
+                type="url"
+                placeholder="https://..."
+              >
+            </label>
+
+            <label>
+              Asset / Drive link
+              <input
+                id="eventDrive"
+                type="url"
+                required
+                placeholder="https://drive.google.com/..."
+              >
+            </label>
+          </div>
+
+          <div class="form-footer">
+            <p class="muted micro">
+              Identity, department, tag and active term are
+              assigned by the database.
+            </p>
+            <button
+              id="submitEvent"
+              class="btn primary"
+              type="submit"
+            >
+              Append to ledger
+            </button>
+          </div>
+
+          <p
+            id="formMessage"
+            class="message hidden"
+          ></p>
         </form>
       </section>
 
-      <section id="ledgerPane" class="pane hidden">
+      <section
+        id="ledgerPane"
+        class="pane hidden"
+      >
         <div class="panel ledger-tools">
-          <div class="section-head"><div><div class="kicker">Central record</div><h2 id="ledgerHeading">Ledger</h2></div><div class="ledger-actions"><div id="exportControls" class="export-controls hidden"><select id="exportScope" aria-label="Export scope"><option value="FILTERED">Filtered view</option><option value="ALL">Complete term</option></select><button id="exportTxt" class="btn ghost small" type="button">TXT</button><button id="exportCsv" class="btn ghost small" type="button">CSV</button><button id="exportJson" class="btn ghost small" type="button">JSON</button></div><button id="refreshButton" class="btn ghost small" type="button">Refresh</button></div></div>
-          <div id="executiveFilters" class="filters hidden">
-            <label>Search<input id="searchFilter" type="search" placeholder="Title, summary, submitter..."></label>
-            <label>Department<select id="departmentFilter"><option value="ALL">All departments</option><option value="EXECUTIVE">Executive entries</option></select></label>
-            <label>Type<select id="typeFilter"><option value="ALL">All types</option></select></label>
+          <div class="section-head">
+            <div>
+              <div class="kicker">
+                Central record
+              </div>
+              <h2 id="ledgerHeading">
+                Ledger
+              </h2>
+            </div>
+
+            <div class="ledger-actions">
+              <div
+                id="exportControls"
+                class="export-controls hidden"
+              >
+                <select
+                  id="exportScope"
+                  aria-label="Export scope"
+                >
+                  <option value="FILTERED">
+                    Filtered view
+                  </option>
+                  <option value="ALL">
+                    Complete term
+                  </option>
+                </select>
+                <button
+                  id="exportTxt"
+                  class="btn ghost small"
+                  type="button"
+                >
+                  TXT
+                </button>
+                <button
+                  id="exportCsv"
+                  class="btn ghost small"
+                  type="button"
+                >
+                  CSV
+                </button>
+                <button
+                  id="exportJson"
+                  class="btn ghost small"
+                  type="button"
+                >
+                  JSON
+                </button>
+              </div>
+              <button
+                id="refreshButton"
+                class="btn ghost small"
+                type="button"
+              >
+                Refresh
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="executiveFilters"
+            class="filters hidden"
+          >
+            <label>
+              Search
+              <input
+                id="searchFilter"
+                type="search"
+                placeholder="Title, summary, submitter, tag..."
+              >
+            </label>
+
+            <label>
+              Department
+              <select id="departmentFilter">
+                <option value="ALL">
+                  All departments
+                </option>
+
+                <option value="EXECUTIVE">
+                  Executive entries
+                </option>
+              </select>
+            </label>
+
+            <label>
+              Type
+              <select id="typeFilter">
+                <option value="ALL">
+                  All types
+                </option>
+              </select>
+            </label>
+
           </div>
         </div>
-        <div id="ledgerStatus" class="empty panel">Loading records…</div>
-        <div id="logList" class="log-list"></div>
+        <div
+          id="ledgerStatus"
+          class="empty panel"
+        >
+          Loading records…
+        </div>
+        <div
+          id="logList"
+          class="log-list"
+        ></div>
       </section>
     </section>
   </main>
-  <script type="module" src="app.js"></script>
+
+  <script
+    type="module"
+    src="app.js"
+  ></script>
+
 </body>
 </html>
