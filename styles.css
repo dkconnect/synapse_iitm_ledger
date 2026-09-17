@@ -10,21 +10,48 @@
   --danger: #e56b6f;
   --ok: #70c69a;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
-  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
 * {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  background: radial-gradient(circle at 15% 0%, #17150f 0, transparent 28%), var(--bg);
-  color: var(--text);
-  min-height: 100vh;
+html {
+  color-scheme: dark;
 }
 
-/* Background Ambient Glows */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 15% 0%,
+      #17150f 0,
+      transparent 28%
+    ),
+    var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .ambient {
   position: fixed;
   border-radius: 50%;
@@ -49,7 +76,6 @@ body {
   left: -80px;
 }
 
-/* Layout Elements */
 .shell {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
@@ -61,13 +87,17 @@ body {
 }
 
 .panel {
-  background: linear-gradient(180deg, rgba(21, 26, 33, 0.96), rgba(15, 19, 25, 0.96));
+  background:
+    linear-gradient(
+      180deg,
+      rgba(21, 26, 33, 0.96),
+      rgba(15, 19, 25, 0.96)
+    );
   border: 1px solid var(--line);
   border-radius: 18px;
   box-shadow: var(--shadow);
 }
 
-/* Auth Section */
 .auth-wrap {
   min-height: calc(100vh - 64px);
   display: grid;
@@ -90,10 +120,10 @@ body {
 }
 
 .brand-panel h1 {
+  margin: 18px 0 28px;
   font-family: Georgia, serif;
   font-size: clamp(3rem, 7vw, 6.5rem);
   line-height: 0.84;
-  margin: 18px 0 28px;
   letter-spacing: -0.055em;
 }
 
@@ -113,8 +143,8 @@ body {
 .brand-rule {
   width: 90px;
   height: 1px;
-  background: var(--gold);
   margin: 34px 0;
+  background: var(--gold);
 }
 
 .micro {
@@ -137,7 +167,11 @@ body {
   color: var(--muted);
 }
 
-/* Form Controls */
+.section-copy {
+  margin-bottom: 0;
+  line-height: 1.55;
+}
+
 label {
   display: block;
   color: #cbd0d7;
@@ -155,7 +189,6 @@ select {
   border: 1px solid #303744;
   border-radius: 10px;
   color: var(--text);
-  font: inherit;
   outline: none;
   transition: 0.18s;
 }
@@ -172,12 +205,16 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(215, 180, 91, 0.08);
 }
 
-/* Buttons */
+.optional {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
 .btn {
+  padding: 11px 16px;
   border: 1px solid transparent;
   border-radius: 10px;
-  padding: 11px 16px;
-  font: inherit;
   font-weight: 750;
   cursor: pointer;
   transition: 0.18s;
@@ -193,7 +230,7 @@ select:focus {
   color: #17130a;
 }
 
-.primary:hover {
+.primary:hover:not(:disabled) {
   background: var(--gold2);
 }
 
@@ -203,8 +240,19 @@ select:focus {
   color: #d8dde3;
 }
 
-.ghost:hover {
+.ghost:hover:not(:disabled) {
   border-color: #46505d;
+}
+
+.danger {
+  background: rgba(229, 107, 111, 0.12);
+  border-color: rgba(229, 107, 111, 0.35);
+  color: #f1a4a7;
+}
+
+.danger:hover:not(:disabled) {
+  background: rgba(229, 107, 111, 0.2);
+  border-color: rgba(229, 107, 111, 0.55);
 }
 
 .small {
@@ -212,12 +260,11 @@ select:focus {
   font-size: 0.82rem;
 }
 
-/* Messages & Alerts */
 .message {
+  margin: 0;
   padding: 11px 13px;
   border-radius: 10px;
   font-size: 0.86rem;
-  margin: 0;
 }
 
 .message.error {
@@ -234,7 +281,6 @@ select:focus {
   color: #a7dfc0;
 }
 
-/* Navigation & Header Components */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -251,10 +297,10 @@ select:focus {
 .brand-mini .mark {
   width: 38px;
   height: 38px;
-  border: 1px solid #6d5b2f;
-  border-radius: 11px;
   display: grid;
   place-items: center;
+  border: 1px solid #6d5b2f;
+  border-radius: 11px;
   color: var(--gold2);
   font-family: Georgia, serif;
   font-size: 1.3rem;
@@ -266,9 +312,9 @@ select:focus {
 }
 
 .brand-mini span {
-  font-size: 0.73rem;
-  color: var(--muted);
   margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.73rem;
 }
 
 .top-actions,
@@ -279,13 +325,13 @@ select:focus {
 }
 
 .pill {
+  min-height: 28px;
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
   padding: 5px 10px;
+  background: #171c23;
   border: 1px solid #343c47;
   border-radius: 999px;
-  background: #171c23;
   color: #c7cdd5;
   font-size: 0.72rem;
   font-weight: 800;
@@ -302,7 +348,6 @@ select:focus {
   color: var(--muted);
 }
 
-/* Main Dashboard Hero & Stats */
 .hero {
   padding: 30px 32px;
   display: flex;
@@ -341,29 +386,105 @@ select:focus {
 
 .stat strong {
   display: block;
+  margin: 7px 0 3px;
+  color: var(--gold2);
   font-family: Georgia, serif;
   font-size: 2.2rem;
-  color: var(--gold2);
-  margin: 7px 0 3px;
 }
 
-/* Tabs & Containers */
+.term-admin {
+  margin-bottom: 26px;
+  padding: 28px;
+}
+
+.term-status-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.term-status-box h3 {
+  margin: 4px 0 0;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.status-active {
+  color: #70c69a;
+  background: rgba(112, 198, 154, 0.08);
+  border: 1px solid rgba(112, 198, 154, 0.28);
+}
+
+.section-divider {
+  margin: 26px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.transition-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.transition-info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.warning-text {
+  margin: 18px 0;
+  padding: 14px 16px;
+  color: #e2bd62;
+  background: rgba(210, 153, 34, 0.08);
+  border: 1px solid rgba(210, 153, 34, 0.25);
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.term-action {
+  margin-top: 14px;
+}
+
+.term-message {
+  margin-top: 18px;
+}
+
 .tabs {
   display: flex;
   gap: 5px;
-  border-bottom: 1px solid var(--line);
   margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
 }
 
 .tab {
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  font: inherit;
-  font-weight: 750;
   padding: 12px 16px;
-  cursor: pointer;
+  background: transparent;
+  border: 0;
   border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-weight: 750;
+  cursor: pointer;
 }
 
 .tab.active {
@@ -398,12 +519,6 @@ select:focus {
   margin-bottom: 17px;
 }
 
-.optional {
-  font-weight: 500;
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
 .form-footer {
   display: flex;
   justify-content: space-between;
@@ -416,22 +531,6 @@ select:focus {
   margin: 0;
 }
 
-.filters {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 12px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-}
-
-.empty {
-  text-align: center;
-  padding: 34px;
-  color: var(--muted);
-  margin-top: 14px;
-}
-
-/* Ledger Actions & Export Tools */
 .ledger-actions,
 .export-controls {
   display: flex;
@@ -451,7 +550,21 @@ select:focus {
   min-width: 52px;
 }
 
-/* Log Entries */
+.filters {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.empty {
+  margin-top: 14px;
+  padding: 34px;
+  text-align: center;
+  color: var(--muted);
+}
+
 .log-list {
   display: grid;
   gap: 12px;
@@ -468,8 +581,8 @@ select:focus {
 .log-top {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
   align-items: flex-start;
+  gap: 16px;
 }
 
 .log-tags {
@@ -479,26 +592,26 @@ select:focus {
 }
 
 .log-card h3 {
-  font-size: 1.2rem;
   margin: 13px 0 6px;
+  font-size: 1.2rem;
 }
 
 .log-meta {
-  font-size: 0.8rem;
   color: var(--muted);
+  font-size: 0.8rem;
 }
 
 .log-desc {
+  margin: 15px 0;
   color: #c4cad1;
   line-height: 1.62;
   white-space: pre-wrap;
-  margin: 15px 0;
 }
 
 .metrics {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
 .metric {
@@ -506,14 +619,14 @@ select:focus {
   background: #151a21;
   border: 1px solid var(--line);
   border-radius: 8px;
-  font-size: 0.78rem;
   color: #b9c0c8;
+  font-size: 0.78rem;
 }
 
 .links {
   display: flex;
-  gap: 15px;
   flex-wrap: wrap;
+  gap: 15px;
   margin-top: 15px;
   padding-top: 14px;
   border-top: 1px solid #20262f;
@@ -530,7 +643,6 @@ select:focus {
   text-decoration: underline;
 }
 
-/* Responsive Media Queries */
 @media (max-width: 800px) {
   .auth-wrap {
     grid-template-columns: 1fr;
@@ -541,7 +653,6 @@ select:focus {
   .brand-panel {
     padding: 10px;
   }
-
   .brand-panel h1 {
     font-size: 4rem;
   }
@@ -549,7 +660,6 @@ select:focus {
   .stats-grid {
     grid-template-columns: 1fr;
   }
-
   .hero {
     align-items: flex-start;
     flex-direction: column;
@@ -559,7 +669,6 @@ select:focus {
   .grid.two {
     grid-template-columns: 1fr;
   }
-
   .form-footer {
     align-items: stretch;
     flex-direction: column;
@@ -574,18 +683,25 @@ select:focus {
     align-items: stretch;
     flex-wrap: wrap;
   }
-
   .export-controls {
     flex-wrap: wrap;
   }
-
   .section-head {
     align-items: flex-start;
+    flex-wrap: wrap;
   }
-
   .export-controls select {
     flex: 1;
     min-width: 150px;
+  }
+}
+
+@media (max-width: 600px) {
+  .transition-info {
+    grid-template-columns: 1fr;
+  }
+  .term-status-box {
+    align-items: flex-start;
   }
 }
 
@@ -598,7 +714,6 @@ select:focus {
   .topbar {
     align-items: flex-start;
   }
-
   .top-actions {
     flex-direction: column;
     align-items: flex-end;
@@ -607,19 +722,25 @@ select:focus {
   .hero,
   .form-card,
   .ledger-tools,
-  .auth-card {
+  .auth-card,
+  .term-admin {
     padding: 22px;
   }
 
   .hero h1 {
     font-size: 1.8rem;
   }
-
   .brand-panel h1 {
     font-size: 3.25rem;
   }
-
   .log-top {
     flex-direction: column;
+  }
+  .export-controls {
+    width: 100%;
+  }
+  .export-controls select {
+    width: 100%;
+    flex-basis: 100%;
   }
 }
